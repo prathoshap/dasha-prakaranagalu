@@ -35,8 +35,8 @@ app = FastAPI(title="AI Shastri", version="0.2.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -219,14 +219,17 @@ async def ws_chat(websocket: WebSocket):
                     async for chunk in synthesize_sarvam_tts_stream(response):
                         await websocket.send_bytes(chunk)
 
-                    await websocket.close()
                     break
 
     except WebSocketDisconnect:
         print("[ws] client disconnected")
     except Exception as exc:
         print(f"[ws] error: {exc}")
-        await websocket.close()
+    finally:
+        try:
+            await websocket.close()
+        except Exception:
+            pass
 
 
 # ── Health check ───────────────────────────────────────────────────────────────
