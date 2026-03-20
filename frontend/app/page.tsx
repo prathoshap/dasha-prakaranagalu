@@ -24,6 +24,7 @@ export default function Home() {
       <footer className="flex flex-col items-center gap-4">
         <PushToTalk />
         <p className="text-stone-600 text-xs">Hold to speak · Release to receive</p>
+        <p className="text-stone-700 text-xs">Built and Maintained by Dr. Prathosh, IISc, Bengaluru</p>
       </footer>
     </main>
   );
